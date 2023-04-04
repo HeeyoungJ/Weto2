@@ -10,7 +10,7 @@ const development = {
 
 const test = {
   username: env.DB_USERNAME,
-  password: null,
+  password: env.DB_PASSWORD,
   database: env.DB_TEST,
   host: env.IP,
   dialect: 'mysql',
@@ -18,7 +18,7 @@ const test = {
 
 const production = {
   username: env.DB_USERNAME,
-  password: null,
+  password: env.DB_PASSWORD,
   database: env.DB_PRODUCTION,
   host: env.IP,
   dialect: 'mysql',

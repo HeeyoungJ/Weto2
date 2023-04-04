@@ -12,7 +12,11 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: ['http://localhost:3000', 'http://3.35.48.121:3000'],
+    origin: [
+      'http://localhost:3000',
+      'http://3.35.48.121:3000',
+      'http://13.124.235.1:3000',
+    ],
     methods: ['GET', 'POST'],
   },
 });
@@ -25,10 +29,10 @@ io.on('connection', (socket) => {
   socket.on('notice', (data) => {
     console.log('notice1', data);
     users[socket.id] = data.nickName;
-    if(!crew[data.currentCrew.id]){
-      crew[data.currentCrew.id] = 1
+    if (!crew[data.currentCrew.id]) {
+      crew[data.currentCrew.id] = 1;
     } else {
-      console.log('121111')
+      console.log('121111');
       crew[data.currentCrew.id] += 1;
     }
     io.to(data.currentCrew.id).emit('notice', {
@@ -36,7 +40,7 @@ io.on('connection', (socket) => {
       chat: data.nickName + '님이 입장하였습니다.',
     });
     io.emit('numberInChat', {
-      numberInChat: crew
+      numberInChat: crew,
     });
   });
 
@@ -77,24 +81,21 @@ io.on('connection', (socket) => {
     io.to(data.currentCrewId).emit('notice', {
       type: 'notice',
       chat: data.nickName + '님이 대화창을 나갔습니다.',
-      
     });
     io.emit('numberInChat', {
-      numberInChat: crew
+      numberInChat: crew,
     });
-
   });
   socket.on('disconnect', () => {
     console.log('disconnect');
 
-    crew[room[socket.id]] ? crew[room[socket.id]] -= 1 : null;
+    crew[room[socket.id]] ? (crew[room[socket.id]] -= 1) : null;
     io.to(room[socket.id]).emit('notice', {
       type: 'notice',
       chat: users[socket.id] + '님이 대화창을 나갔습니다.',
-      
     });
     io.emit('numberInChat', {
-      numberInChat : crew
+      numberInChat: crew,
     });
     // delete users[socket.id];
     // io.emit('users', users);
@@ -116,7 +117,11 @@ app.use(express.urlencoded({ extended: false })); // uri 파싱
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://3.35.48.121:3000'],
+    origin: [
+      'http://localhost:3000',
+      'http://3.35.48.121:3000',
+      'http://13.124.235.1:3000',
+    ],
     credentials: true,
     method: ['GET', 'POST', 'DELETE', 'PATCH'],
   })

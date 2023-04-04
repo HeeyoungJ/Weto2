@@ -9,6 +9,7 @@ import { crewChange, crewPagination, modalShow } from '../store/modules/crew';
 import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import CrewModal from '../components/crew/CrewModal';
+import { redirect } from 'react-router-dom';
 
 const InfoTitle = styled.div`
   overflow: hidden;
@@ -21,7 +22,7 @@ const InfoTitle = styled.div`
 export default function ChatPage() {
   // let socket = io.connect(process.env.REACT_APP_URL);
   const [socket, setSocket] = useState(null);
-  
+
   const user = sessionStorage;
   const [crew, setCrew] = useState([]);
   const [display, setDisplay] = useState(0);
@@ -32,7 +33,7 @@ export default function ChatPage() {
   const changeNum = (e) => dispatch(crewPagination(e - 1));
   const change = useSelector((state) => state.crew.crewChange);
   const [numberInChat, numberInChatSet] = useState(0);
-  
+
   useEffect(() => {
     setSocket(io.connect(process.env.REACT_APP_URL));
   }, []);
@@ -53,6 +54,8 @@ export default function ChatPage() {
         city: city,
       },
     });
+    console.log('---------');
+    console.log(data.data);
     setCrew(data.data);
   }
 
@@ -344,7 +347,7 @@ export default function ChatPage() {
         defaultPageSize={6}
         total={crew.length}
         onChange={(e) => changeNum(e)}
-        style={{ width: '70%', textAlign: 'center' }}
+        style={{ width: '70%', textAlign: 'center', color: '#F2CB61' }}
       />
 
       {/* {crew.map((e, i) => (
