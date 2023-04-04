@@ -54,6 +54,8 @@ export default function ChatPage() {
         city: city,
       },
     });
+    console.log('---------');
+    console.log(data.data);
     setCrew(data.data);
   }
 
